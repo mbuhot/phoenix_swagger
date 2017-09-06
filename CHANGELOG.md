@@ -3,6 +3,7 @@
   * Minor fix that supports the Phoenix 1.3 namespacing, where it is {Project}Web instead of {Project}.Web.
   * Add support for has_many relationships for JSON-API resource schemas
   * Upgrade to swagger-ui 3.1.7
+  * Use the :load_from_system_env Endpoint config flag to detect dynamic host and port configuration
 
 # 0.6.4
 

@@ -20,17 +20,17 @@ defmodule SimpleWeb.UserController do
       description: "List all users in the database",
       responses: %{
         200 => response("OK", "application/json", "#/components/schemas/users_response", example: %{
-            data: [
-              %{
-                id: 1, name: "Joe", email: "Joe6@mail.com",
-                inserted_at: "2017-02-08T12:34:55Z", updated_at: "2017-02-12T13:45:23Z"
-              },
-              %{
-                id: 2, name: "Jack", email: "Jack7@mail.com",
-                inserted_at: "2017-02-04T11:24:45Z", updated_at: "2017-02-15T23:15:43Z"
-              }
-            ]
-          })
+          data: [
+            %{
+              id: 1, name: "Joe", email: "Joe6@mail.com",
+              inserted_at: "2017-02-08T12:34:55Z", updated_at: "2017-02-12T13:45:23Z"
+            },
+            %{
+              id: 2, name: "Jack", email: "Jack7@mail.com",
+              inserted_at: "2017-02-04T11:24:45Z", updated_at: "2017-02-15T23:15:43Z"
+            }
+          ]
+        })
       }
     }
   end
@@ -41,7 +41,7 @@ defmodule SimpleWeb.UserController do
 
   def create_operation do
     alias PhoenixSwagger.OpenAPI.OperationObject
-    import OperationObject, only: [response: 4, request_body: 4]
+    import OperationObject, only: [request_body: 4, response: 4]
 
     %OperationObject{
       summary: "Create user",
@@ -79,11 +79,11 @@ defmodule SimpleWeb.UserController do
       ],
       responses: %{
         200 => response("OK", "application/json", "#components/schemas/user_response", example: %{
-            data: %{
-              id: 123, name: "Joe", email: "Joe3@mail.com",
-              inserted_at: "2017-02-08T12:34:55Z", updated_at: "2017-02-12T13:45:23Z"
-            }
-          })
+          data: %{
+            id: 123, name: "Joe", email: "Joe3@mail.com",
+            inserted_at: "2017-02-08T12:34:55Z", updated_at: "2017-02-12T13:45:23Z"
+          }
+        })
       }
     }
   end

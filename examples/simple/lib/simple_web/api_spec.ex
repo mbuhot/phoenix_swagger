@@ -1,4 +1,4 @@
-defmodule SimpleWeb.ApiSpec do
+defmodule SimpleWeb.APISpec do
   alias PhoenixSwagger.OpenAPI.{
     ComponentsObject,
     ContactObject,

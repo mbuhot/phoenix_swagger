@@ -9,7 +9,7 @@ defmodule SimpleWeb.Router do
 
   scope "/api", SimpleWeb do
     pipe_through :api
-    resources "/users", UserController, only: [:index, :create] #except: [:new, :edit]
+    resources "/users", UserController, except: [:new, :edit]
   end
 
   scope "/api/swagger" do

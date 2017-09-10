@@ -143,40 +143,20 @@ window.onload = function() {
     |> Conn.send_resp(200, conn.assigns.index_body)
   end
 
-  # Render the swagger.json file or 404 for any other file
-  get "/:name" do
-    spec_url = conn.assigns.spec_url
-    case conn.path_params["name"] do
-      ^spec_url -> Conn.send_file(conn, 200, conn.assigns.swagger_file_path)
-      _ -> Conn.send_resp(conn, 404, "not found")
-    end
-  end
-
   @doc """
   Plug.init callback
 
-  Options:
-
-   - `otp_app` (required) The name of the app has is hosting the swagger file
-   - `swagger_file` (required) The name of the file, eg "swagger.json"
-
   """
-  def init(opts) do
-    app = Keyword.fetch!(opts, :otp_app)
-    swagger_file = Keyword.fetch!(opts, :swagger_file)
-    body = EEx.eval_string(@template, spec_url: swagger_file)
-    swagger_file_path = Path.join(["priv", "static", swagger_file])
-    [app: app, body: body, spec_url: swagger_file, swagger_file_path: swagger_file_path]
+  def init(swagger_url: swagger_url) do
+    [body: EEx.eval_string(@template, spec_url: swagger_url)]
   end
 
   @doc """
   Plug.call callback
   """
-  def call(conn, app: app, body: body, spec_url: url, swagger_file_path: swagger_file_path) do
+  def call(conn, body: body) do
     conn
     |> Conn.assign(:index_body, body)
-    |> Conn.assign(:spec_url, url)
-    |> Conn.assign(:swagger_file_path, Path.join([Application.app_dir(app), swagger_file_path]))
     |> super([])
   end
 end

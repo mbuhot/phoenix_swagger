@@ -9,19 +9,11 @@ defmodule SimpleWeb.Router do
 
   scope "/api", SimpleWeb do
     pipe_through :api
-    resources "/users", UserController, except: [:new, :edit]
+    resources "/users", UserController, only: [:index, :create] #except: [:new, :edit]
   end
 
   scope "/api/swagger" do
-    forward "/", PhoenixSwagger.Plug.SwaggerUI, otp_app: :simple, swagger_file: "swagger.json"
-  end
-
-  def swagger_info do
-    %{
-      info: %{
-        version: "1.0",
-        title: "Simple App"
-      }
-    }
+    get "/swagger.json", SimpleWeb.SwaggerController, :show
+    forward "/", PhoenixSwagger.Plug.SwaggerUI, swagger_url: "swagger.json"
   end
 end

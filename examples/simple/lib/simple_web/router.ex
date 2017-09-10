@@ -4,7 +4,7 @@ defmodule SimpleWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug Validate, validation_failed_status: 422
+    # plug Validate, validation_failed_status: 422
   end
 
   scope "/api", SimpleWeb do

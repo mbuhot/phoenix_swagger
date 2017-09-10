@@ -6,7 +6,7 @@ defmodule Simple.Application do
   # for more information on OTP Applications
   def start(_type, _args) do
 
-    PhoenixSwagger.Validator.parse_swagger_schema("priv/static/swagger.json")
+    # PhoenixSwagger.Validator.parse_swagger_schema("priv/static/swagger.json")
 
     # Define workers and child supervisors to be supervised
     children = [

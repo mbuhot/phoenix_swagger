@@ -767,6 +767,7 @@ defmodule PhoenixSwagger.OpenAPI do
   def resolve_schema_modules_from_parameter(parameter = %ParameterObject{}, schemas) do
     {parameter, schemas}
   end
+  def resolve_schema_modules_from_content(nil, schemas), do: {nil, schemas}
   def resolve_schema_modules_from_content(content, schemas) do
     Enum.reduce(content, {content, schemas}, fn {mime, media}, {content, schemas} ->
       {new_media, schemas} = resolve_schema_modules_from_media_type(media, schemas)

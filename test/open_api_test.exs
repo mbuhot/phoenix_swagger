@@ -8,8 +8,65 @@ defmodule PhoenixSwagger.OpenAPITest do
     OperationObject,
     PathItemObject,
     PathsObject,
+    ReferenceObject,
+    SchemaObject,
     ServerObject
   }
+
+  defmodule Schemas do
+    defmodule User do
+      def schema do
+        %SchemaObject{
+          title: "User",
+          description: "A user of the app",
+          type: :object,
+          properties: %{
+            id: %SchemaObject{type: :integer, description: "User ID"},
+            name:  %SchemaObject{type: :string, description: "User name"},
+            email: %SchemaObject{type: :string, description: "Email address", format: :email},
+            inserted_at: %SchemaObject{type: :string, description: "Creation timestamp", format: :datetime},
+            updated_at: %SchemaObject{type: :string, description: "Update timestamp", format: :datetime}
+          }
+        }
+      end
+    end
+    defmodule UserRequest do
+      def schema do
+        %SchemaObject{
+          title: "UserRequest",
+          description: "POST body for creating a user",
+          type: :object,
+          properties: %{
+            user: User
+          }
+        }
+      end
+    end
+    defmodule UserResponse do
+      def schema do
+        %SchemaObject{
+          title: "UserResponse",
+          description: "Response schema for single user",
+          type: :object,
+          properties: %{
+            data: User
+          }
+        }
+      end
+    end
+    defmodule UsersResponse do
+      def schema do
+        %SchemaObject{
+          title: "UsersReponse",
+          description: "Response schema for multiple users",
+          type: :object,
+          properties: %{
+            data: %SchemaObject{description: "The users details", type: :array, items: User}
+          }
+        }
+      end
+    end
+  end
 
   defmodule UserController do
     use Phoenix.Controller
@@ -25,7 +82,7 @@ defmodule PhoenixSwagger.OpenAPITest do
           parameter(:id, :path, :integer, "User ID", example: 123)
         ],
         responses: %{
-          200 => response("User", "application/json", "#/components/schemas/user")
+          200 => response("User", "application/json", Schemas.UserResponse)
         }
       }
     end
@@ -43,7 +100,7 @@ defmodule PhoenixSwagger.OpenAPITest do
         operationId: "UserController.index",
         parameters: [],
         responses: %{
-          200 => response("User List Response", "application/json", "#/components/schemas/user_list")
+          200 => response("User List Response", "application/json", Schemas.UsersResponse)
         }
       }
     end
@@ -60,9 +117,9 @@ defmodule PhoenixSwagger.OpenAPITest do
         description: "Create a user",
         operationId: "UserController.create",
         parameters: [],
-        requestBody: request_body("The user attributes", "application/json", "#/components/schemas/new_user"),
+        requestBody: request_body("The user attributes", "application/json", Schemas.UserRequest),
         responses: %{
-          201 => response("User", "application/json", "#/components/schemas/user")
+          201 => response("User", "application/json", Schemas.UserResponse)
         }
       }
     end
@@ -105,6 +162,10 @@ defmodule PhoenixSwagger.OpenAPITest do
           },
           paths: PathsObject.from_router(TestRouter)
         }
+        |> PhoenixSwagger.OpenAPI.resolve_schema_modules()
+        |> PhoenixSwagger.OpenAPI.to_json()
+        |> Poison.encode!(pretty: true)
+        |> IO.puts()
 
       assert spec
     end

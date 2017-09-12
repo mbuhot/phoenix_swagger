@@ -4,6 +4,7 @@ defmodule SimpleWeb.UserController do
 
   alias Simple.Accounts
   alias Simple.Accounts.User
+  alias SimpleWeb.Schemas.{UserRequest, UserResponse, UsersResponse}
 
   action_fallback SimpleWeb.FallbackController
 
@@ -19,7 +20,7 @@ defmodule SimpleWeb.UserController do
       summary: "List Users",
       description: "List all users in the database",
       responses: %{
-        200 => response("OK", "application/json", "#/components/schemas/users_response", example: %{
+        200 => response("OK", "application/json", UsersResponse, example: %{
           data: [
             %{
               id: 1, name: "Joe", email: "Joe6@mail.com",
@@ -46,11 +47,11 @@ defmodule SimpleWeb.UserController do
     %OperationObject{
       summary: "Create user",
       description: "Creates a new user",
-      requestBody: request_body("The user details", "application/json", "#/components/schemas/user_request", example: %{
+      requestBody: request_body("The user details", "application/json", UserRequest, example: %{
           user: %{name: "Joe", email: "Joe1@mail.com"}
         }),
       responses: %{
-        201 => response("User created OK", "application/json", "#/components/schemas/user_response", example: %{
+        201 => response("User created OK", "application/json", UserResponse, example: %{
           data: %{
             id: 1, name: "Joe", email: "Joe2@mail.com", inserted_at: "2017-02-08T12:34:55Z", updated_at: "2017-02-12T13:45:23Z"
           }
@@ -78,7 +79,7 @@ defmodule SimpleWeb.UserController do
         parameter(:id, :path, :integer, "User ID", required: true, example: 123)
       ],
       responses: %{
-        200 => response("OK", "application/json", "#components/schemas/user_response", example: %{
+        200 => response("OK", "application/json", UserResponse, example: %{
           data: %{
             id: 123, name: "Joe", email: "Joe3@mail.com",
             inserted_at: "2017-02-08T12:34:55Z", updated_at: "2017-02-12T13:45:23Z"
@@ -102,11 +103,11 @@ defmodule SimpleWeb.UserController do
       parameters: [
         parameter(:id, :path, :integer, "User ID", required: true, example: 3),
       ],
-      requestBody: request_body("The user details", "application/json", "#/components/schemas/user_request", example: %{
+      requestBody: request_body("The user details", "application/json", UserRequest, example: %{
         user: %{name: "Joe", email: "joe4@mail.com"}
       }),
       responses: %{
-        200 => response("Updated Successfully", "application/json", "#/components/schemas/user_response", example: %{
+        200 => response("Updated Successfully", "application/json", UserResponse, example: %{
           data: %{
             id: 3, name: "Joe", email: "Joe5@mail.com",
             inserted_at: "2017-02-08T12:34:55Z", updated_at: "2017-02-12T13:45:23Z"

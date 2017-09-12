@@ -41,33 +41,10 @@ defmodule SimpleWeb.APISpec do
               name: "Joe",
               email: "joe@gmail.com"
             }
-          },
-          "user_request" => %SchemaObject{
-            title: "UserRequest",
-            description: "POST body for creating a user",
-            type: :object,
-            properties: %{
-              user: %ReferenceObject{"$ref": "#/components/schemas/user"}
-            }
-          },
-          "user_response" => %SchemaObject{
-            title: "UserResponse",
-            description: "Response schema for single user",
-            type: :object,
-            properties: %{
-              data: %ReferenceObject{"$ref": "#/components/schemas/user"}
-            }
-          },
-          "users_response" => %SchemaObject{
-            title: "UsersReponse",
-            description: "Response schema for multiple users",
-            type: :object,
-            properties: %{
-              data: %SchemaObject{description: "The users details", type: :array, items: %ReferenceObject{"$ref": "#/components/schemas/user"}}
-            }
           }
         }
       }
     }
+    |> PhoenixSwagger.OpenAPI.resolve_schema_modules()
   end
 end

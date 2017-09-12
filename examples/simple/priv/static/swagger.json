@@ -15,7 +15,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/user_response"
+                  "$ref": "#/components/schemas/Elixir.SimpleWeb.Schemas.UserResponse"
                 },
                 "example": {
                   "data": {
@@ -35,7 +35,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/user_request"
+                "$ref": "#/components/schemas/Elixir.SimpleWeb.Schemas.UserRequest"
               },
               "example": {
                 "user": {
@@ -68,7 +68,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/user_response"
+                  "$ref": "#/components/schemas/Elixir.SimpleWeb.Schemas.UserResponse"
                 },
                 "example": {
                   "data": {
@@ -88,7 +88,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/user_request"
+                "$ref": "#/components/schemas/Elixir.SimpleWeb.Schemas.UserRequest"
               },
               "example": {
                 "user": {
@@ -121,7 +121,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#components/schemas/user_response"
+                  "$ref": "#/components/schemas/Elixir.SimpleWeb.Schemas.UserResponse"
                 },
                 "example": {
                   "data": {
@@ -181,7 +181,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/user_response"
+                  "$ref": "#/components/schemas/Elixir.SimpleWeb.Schemas.UserResponse"
                 },
                 "example": {
                   "data": {
@@ -201,7 +201,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/user_request"
+                "$ref": "#/components/schemas/Elixir.SimpleWeb.Schemas.UserRequest"
               },
               "example": {
                 "user": {
@@ -222,7 +222,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/users_response"
+                  "$ref": "#/components/schemas/Elixir.SimpleWeb.Schemas.UsersResponse"
                 },
                 "example": {
                   "data": [
@@ -262,40 +262,6 @@
   },
   "components": {
     "schemas": {
-      "users_response": {
-        "type": "object",
-        "title": "UsersReponse",
-        "properties": {
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/user"
-            },
-            "description": "The users details"
-          }
-        },
-        "description": "Response schema for multiple users"
-      },
-      "user_response": {
-        "type": "object",
-        "title": "UserResponse",
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/user"
-          }
-        },
-        "description": "Response schema for single user"
-      },
-      "user_request": {
-        "type": "object",
-        "title": "UserRequest",
-        "properties": {
-          "user": {
-            "$ref": "#/components/schemas/user"
-          }
-        },
-        "description": "POST body for creating a user"
-      },
       "user": {
         "type": "object",
         "title": "User",
@@ -328,6 +294,70 @@
           "name": "Joe",
           "id": 123,
           "email": "joe@gmail.com"
+        },
+        "description": "A user of the app"
+      },
+      "Elixir.SimpleWeb.Schemas.UsersResponse": {
+        "type": "object",
+        "title": "UsersReponse",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Elixir.SimpleWeb.Schemas.User"
+            },
+            "description": "The users details"
+          }
+        },
+        "description": "Response schema for multiple users"
+      },
+      "Elixir.SimpleWeb.Schemas.UserResponse": {
+        "type": "object",
+        "title": "UserResponse",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/Elixir.SimpleWeb.Schemas.User"
+          }
+        },
+        "description": "Response schema for single user"
+      },
+      "Elixir.SimpleWeb.Schemas.UserRequest": {
+        "type": "object",
+        "title": "UserRequest",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/Elixir.SimpleWeb.Schemas.User"
+          }
+        },
+        "description": "POST body for creating a user"
+      },
+      "Elixir.SimpleWeb.Schemas.User": {
+        "type": "object",
+        "title": "User",
+        "properties": {
+          "updated_at": {
+            "type": "string",
+            "format": "datetime",
+            "description": "Update timestamp"
+          },
+          "name": {
+            "type": "string",
+            "description": "User name"
+          },
+          "inserted_at": {
+            "type": "string",
+            "format": "datetime",
+            "description": "Creation timestamp"
+          },
+          "id": {
+            "type": "integer",
+            "description": "User ID"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email address"
+          }
         },
         "description": "A user of the app"
       }
